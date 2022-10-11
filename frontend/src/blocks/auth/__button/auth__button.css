@@ -1,0 +1,10 @@
+.auth__button {
+  margin-top: 216px;
+  background: #FFFFFF;
+  border-radius: 2px;
+  padding: 14px 84px;
+  font-size: 18px;
+  line-height: 22px;
+  border: none;
+  cursor: pointer;
+}
