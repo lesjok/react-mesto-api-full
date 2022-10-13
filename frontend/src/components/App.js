@@ -135,6 +135,7 @@ function App() {
 
   useEffect(() => {
       checkToken();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   function handleCardLike(card) {
@@ -252,6 +253,7 @@ function App() {
         document.removeEventListener("keydown", closeByEscape);
       };
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   return (
