@@ -173,7 +173,6 @@ function App() {
       opened: false,
     });
   };
-
   function handleEditProfileClick() {
     setisEditProfilePopupOpen(true);
   }
