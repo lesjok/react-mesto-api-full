@@ -2,7 +2,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const STATUS_CODE = require('../errors/errors');
 const ConflictError = require('../errors/conflictError');
 const BadRequestError = require('../errors/badRequest');
 const NotFound = require('../errors/notFound');
@@ -33,8 +32,7 @@ const createUser = (req, res, next) => {
           next(err);
         }
       });
-  })
-    .catch(next);
+  });
 };
 // eslint-disable-next-line consistent-return
 const login = (req, res, next) => {
@@ -45,18 +43,13 @@ const login = (req, res, next) => {
       if (!user) {
         next(new NotAuthError('Ошибка авторизации.'));
       }
-      const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'secret-code', { expiresIn: '7d' });
       res
-        .cookie('jwt', token, {
-          httpOnly: true,
+        .cookie('access_token', token, {
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: false,
         })
-        .send({
-          _id: user._id,
-          email: user.email,
-          avatar: user.avatar,
-          name: user.name,
-          about: user.about,
-        });
+        .send({ message: 'Аутентификация прошла успешно' });
     })
     .catch(next);
 };
@@ -73,7 +66,7 @@ const getCurrentUser = (req, res, next) => {
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
-      res.status(STATUS_CODE.success).send(users);
+      res.send(users);
     })
     .catch(next);
 };
@@ -83,7 +76,7 @@ const getUser = (req, res, next) => {
       if (!user) {
         next(new NotFound('Пользователь не найден.'));
       } else {
-        res.status(STATUS_CODE.success).send(user);
+        res.send(user);
       }
     })
     .catch((error) => {
@@ -107,12 +100,7 @@ const updateUser = (req, res, next) => {
       if (!user) {
         return next(new NotFound('Пользователь не найден.'));
       }
-      res.send({
-        _id: user._id,
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
-      });
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
@@ -135,7 +123,7 @@ const updateAvatar = (req, res, next) => {
       if (!user) {
         return next(new NotFound('Пользователь не найден.'));
       }
-      res.send({ _id: user._id, avatar: user.avatar });
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {

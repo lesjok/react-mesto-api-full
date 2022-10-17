@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const {
-  createUser,
   getUser,
   getUsers,
   updateUser,
@@ -10,7 +9,6 @@ const {
 } = require('../controllers/users');
 const { regExp } = require('../constants/regularExpression');
 
-router.post('/', createUser);
 router.get('/', getUsers);
 router.get('/me', getCurrentUser);
 router.get('/:userId', celebrate({
