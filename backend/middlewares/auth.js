@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../../.env' });
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const NotAuthError = require('../errors/notAuthError');
 

@@ -1,0 +1,7 @@
+.gallery-item__text {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  padding: 21px 20px 26px 21px;
+}

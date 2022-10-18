@@ -1,0 +1,13 @@
+.popup__error {
+  color: #FF0000;
+  top: 144px;
+  font-size: 12px;
+  position: absolute;
+}
+.popup__error.about-input-error,
+.popup__error.link-input-error {
+  top: 204px;
+}
+.popup__error.error-avatar {
+  top: 144px;
+}

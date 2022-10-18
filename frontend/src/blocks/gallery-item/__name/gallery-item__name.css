@@ -1,0 +1,13 @@
+.gallery-item__name {
+  color: #000;
+  box-sizing: border-box;
+  background-color: #fff;
+  font-weight: 900;
+  margin: 0;
+  font-size: 24px;
+  max-width: 194px;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

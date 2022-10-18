@@ -1,0 +1,19 @@
+.popup__style {
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 30px;
+  min-height: 27px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.popup__style::placeholder {
+  color: #C4C4C4;
+}
+@media screen and (max-width: 320px) {
+  .popup__input {
+    width: 90%;
+  }
+}
+.popup__style.popup__style_error {
+  border-bottom: 1px solid #FF0000;
+}

@@ -1,0 +1,31 @@
+.popup__close-button {
+  position: absolute;
+  right: -28px;
+  top: -41px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.popup__close-button:before,
+.popup__close-button:after {
+  position: absolute;
+  content: '';
+  width: 4px;
+  background-color: #fff;
+  height: 36px;
+  transform: rotate(45deg);
+}
+.popup__close-button:after {
+  transform: rotate(-45deg);
+}
+@media screen and (max-width: 372px) {
+  .popup__close-button:before,
+  .popup__close-button:after {
+    width: 3px;
+    height: 26px;
+  }
+  .popup__close-button {
+    right: 6px;
+    top: -40px;
+  }
+}
