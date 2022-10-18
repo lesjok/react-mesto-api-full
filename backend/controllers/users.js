@@ -46,8 +46,8 @@ const login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'secret-code', { expiresIn: '7d' });
       res
         .cookie('access_token', token, {
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: false,
+          sameSite: 'none',
+          secure: true,
         })
         .send({ message: 'Аутентификация прошла успешно' });
     })

@@ -76,6 +76,27 @@ function App() {
     }
   }
 
+  //   useEffect(() => {
+  //   if (loggedIn) {
+  //     registerApi.getContent()
+  //     .then((data) => {
+  //       if (data) {
+  //         setCurrentUser(data);
+  //         const userData = {
+  //           'email': data.email,
+  //         }
+  //         setUserData(userData);
+  //         setLoggedIn(true);
+  //         history.push("/");
+          
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.name);
+  //     })
+  //   }
+  // }, [loggedIn]);
+
   function handleRegister(data) {
     registerApi.register(data)
     .then((res) => {

@@ -52,6 +52,7 @@ function Main({
 
         <div>
           <ul className="gallery">
+            {console.log(cards)}
             {cards.map((card) => (
               <Card
                 key={card._id}

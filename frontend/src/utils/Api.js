@@ -15,6 +15,7 @@ class Api {
     })
     .then(this._errorHandler);
   }
+  
   addCard(data) {
     return fetch(`${this._options.baseUrl}/cards`, {
       method: 'POST',

@@ -21,7 +21,9 @@ const createCard = (req, res, next) => {
 const getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => {
-      res.send(cards);
+      if (cards !== null) {
+        res.send(cards);
+      }
     })
     .catch(next);
 };
