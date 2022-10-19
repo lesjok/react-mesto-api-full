@@ -1,4 +1,4 @@
-import Header from "../Header/Header";
+import Header from "../Header/Header.js";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 

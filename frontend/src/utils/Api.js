@@ -41,8 +41,8 @@ class Api {
     })
     .then(this._errorHandler);
   }
-  deleteCard(data) {
-    return fetch(`${this._options.baseUrl}/cards/${data._id}`, {
+  deleteCard(cardID) {
+    return fetch(`${this._options.baseUrl}/cards/${cardID}`, {
       method: 'DELETE',
       headers: this._options.headers,
       credentials: this._options.credentials,
@@ -59,26 +59,26 @@ class Api {
       }),
     }).then(this._errorHandler);
   }
-  changeLikeCardStatus(cardId, isLiked) {
+  changeLikeCardStatus(cardID, isLiked) {
     if (!isLiked) {
-      return fetch(`${this._options.baseUrl}/cards/${cardId}/likes`, {
+      return fetch(`${this._options.baseUrl}/cards/${cardID}/likes`, {
         method: 'PUT',
         headers: this._options.headers,
-        credentials: this._options.credentials,
+        credentials: 'include',
       })
       .then(this._errorHandler);
     } else {
-      return fetch(`${this._options.baseUrl}/cards/${cardId}/likes`, {
+      return fetch(`${this._options.baseUrl}/cards/${cardID}/likes`, {
         method: 'DELETE',
         headers: this._options.headers,
-        credentials: this._options.credentials,
+        credentials: 'include',
       })
       .then(this._errorHandler);
     } 
   }
 }
 const api = new Api({
-  baseUrl: 'https://api.react-mesto.nomoredomains.icu',
+  baseUrl: 'http://localhost:3001',
   headers: {
       'Content-Type': 'application/json',
   },

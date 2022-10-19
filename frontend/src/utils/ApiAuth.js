@@ -14,7 +14,8 @@ class RegisterApi {
     return fetch(`${this._options.baseUrl}/signup`, {
       method: 'POST',
       headers: this._options.headers,
-      body: JSON.stringify(data)
+      credentials: 'include',
+      body: JSON.stringify(data),    
     })
     .then(this._checkResponseStatus)
   }
@@ -40,7 +41,7 @@ class RegisterApi {
 }
 
 const registerApi = new RegisterApi({
-  baseUrl: 'https://api.react-mesto.nomoredomains.icu',
+  baseUrl: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },

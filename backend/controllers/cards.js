@@ -21,36 +21,23 @@ const createCard = (req, res, next) => {
 const getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => {
-      if (cards !== null) {
-        res.send(cards);
-      }
+      res.send(cards);
     })
     .catch(next);
 };
 const deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId)
-    .then((result) => {
-      if (!result) {
-        throw new NotFound('Карточка не найдена.');
+    .orFail(() => {
+      throw new NotFound('Карточка не найдена');
+    })
+    .then((currentCard) => {
+      if (currentCard.owner.toString() === req.user._id) {
+        Card.findByIdAndRemove(req.params.cardId)
+          .then(() => res.send({ message: 'Карточка удалена успешно' }))
+          .catch(next);
+      } else {
+        next(new ForbiddenError('Удалить данную карточку невозможно. Вы не являетесь ее создателем'));
       }
-      if (!result.owner.equals(req.user._id)) {
-        throw new ForbiddenError();
-      }
-
-      Card.findByIdAndRemove(req.params.cardId)
-        .then((card) => {
-          if (!card) {
-            throw new ForbiddenError();
-          }
-          res.send({ data: card });
-        })
-        .catch((err) => {
-          if (err.name === 'CastError') {
-            next(new BadRequestError());
-            return;
-          }
-          next(err);
-        });
     })
     .catch(next);
 };
@@ -59,18 +46,13 @@ const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
-    { new: true, runValidators: true },
+    { new: true },
   )
+    .orFail(() => {
+      throw new NotFound('Карточка не найдена');
+    })
     .then((card) => {
-      if (!card) {
-        next(new NotFound('Карточка не найдена.'));
-      } else {
-        res.send({
-          _id: card._id,
-          name: card.name,
-          link: card.link,
-        });
-      }
+      res.send(card);
     })
     .catch((error) => {
       if (error.name === 'CastError') {
@@ -90,11 +72,7 @@ const deleteLikeCard = (req, res, next) => {
       if (!card) {
         next(new NotFound('Карточка не найдена.'));
       } else {
-        res.send({
-          _id: card._id,
-          name: card.name,
-          link: card.link,
-        });
+        res.send(card);
       }
     })
     .catch((error) => {

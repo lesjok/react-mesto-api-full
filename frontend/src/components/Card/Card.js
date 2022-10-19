@@ -1,15 +1,15 @@
 import trash from "../../images/Trash.svg";
 import React from "react";
 import { useContext } from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 function Card(props) {
   const currentUser = useContext(CurrentUserContext);
-  const isOwn = props.elem.owner._id === currentUser._id;
+  const isOwn = props.elem.owner === currentUser._id;
   const cardDeleteButtonClassName = `gallery-item__trash ${
     isOwn ? " " : "invisible"
   }`;
-  const isLiked = props.elem.likes.some((i) => i._id === currentUser._id);
+  const isLiked = props.elem.likes.some((i) => i === currentUser._id);
   const cardLikeButtonClassName = (`gallery-item__like ${isLiked ? "gallery-item__like-active" : ""}`);
   
   function handleCardClick() {

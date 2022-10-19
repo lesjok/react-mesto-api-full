@@ -3,10 +3,10 @@ import "../index.css";
 import Main from "./Main/Main.js";
 import ImagePopup from "./ImagePopup/ImagePopup.js";
 import api from "../utils/Api.js";
-import {CurrentUserContext} from "../contexts/CurrentUserContext";
-import EditProfilePopup from "./EditProfilePopup/EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup/EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup/AddPlacePopup";
+import {CurrentUserContext} from "../contexts/CurrentUserContext.js";
+import EditProfilePopup from "./EditProfilePopup/EditProfilePopup.js";
+import EditAvatarPopup from "./EditAvatarPopup/EditAvatarPopup.js";
+import AddPlacePopup from "./AddPlacePopup/AddPlacePopup.js";
 import { Route, Switch, useHistory } from "react-router-dom";
 import Login from "./Login/Login.js";
 import Register from "./Register/Register.js";
@@ -45,63 +45,41 @@ function App() {
     registerApi
       .authorize(data)
       .then((res) => {
-          setLoggedIn(true);
-          history.push("/");
+        setLoggedIn(true);
+        history.push("/");
       })
       .catch((err) => {  
         console.log(err);
         handlePopupSuccess(false);
       });
   }
-
-  function checkToken() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      registerApi
-        .getContent(token)
-        .then((data) => {
-          if (data) {
-            const userData = {
-              'email': data.data.email,
-            };
-            setUserData(userData);
-            setLoggedIn(true);
-            history.push("/");
+  useEffect(() => {
+    if (loggedIn) {
+      registerApi.getContent()
+      .then((data) => {
+        if (data) {
+          setCurrentUser(data);
+          const userData = {
+            'email': data.email,
           }
-        })
-        .catch((err) => {
-          handlePopupSuccess(false);
-          console.log(err);
-        });
+          console.log(userData);
+          setUserData(userData);
+          setLoggedIn(true);
+          history.push('/');      
+        }
+      })
+      .catch((err) => {
+        console.log(err.name);
+      })
     }
-  }
-
-  //   useEffect(() => {
-  //   if (loggedIn) {
-  //     registerApi.getContent()
-  //     .then((data) => {
-  //       if (data) {
-  //         setCurrentUser(data);
-  //         const userData = {
-  //           'email': data.email,
-  //         }
-  //         setUserData(userData);
-  //         setLoggedIn(true);
-  //         history.push("/");
-          
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.name);
-  //     })
-  //   }
-  // }, [loggedIn]);
+  }, [loggedIn]);
 
   function handleRegister(data) {
     registerApi.register(data)
     .then((res) => {
       handlePopupSuccess(true);
-      return res;
+      history.push('/sign-in');
+      return res;   
     })
     .catch((err) => {
       handlePopupSuccess(false);
@@ -110,7 +88,6 @@ function App() {
   }
 
   function onSignOut() {
-    localStorage.removeItem("token");
     setLoggedIn(false);
   }
 
@@ -139,13 +116,8 @@ function App() {
     }
   }, [loggedIn]);
 
-  useEffect(() => {
-      checkToken();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedIn]);
-
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
@@ -160,7 +132,7 @@ function App() {
 
   function handleCardDelete(card) {
     api
-      .deleteCard(card)
+      .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((item) => item._id !== card._id));
       })

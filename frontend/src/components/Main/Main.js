@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import React from "react";
 import Card from "../Card/Card.js";
-import {CurrentUserContext} from '../../contexts/CurrentUserContext';
+import {CurrentUserContext} from '../../contexts/CurrentUserContext.js';
 import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
 
@@ -52,7 +52,6 @@ function Main({
 
         <div>
           <ul className="gallery">
-            {console.log(cards)}
             {cards.map((card) => (
               <Card
                 key={card._id}

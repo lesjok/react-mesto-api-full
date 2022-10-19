@@ -21,7 +21,7 @@ const createUser = (req, res, next) => {
         about: user.about,
         avatar: user.avatar,
         _id: user._id,
-        email,
+        email: user.email,
       }))
       .catch((err) => {
         if (err.name === 'ValidationError') {
@@ -47,7 +47,7 @@ const login = (req, res, next) => {
       res
         .cookie('access_token', token, {
           sameSite: 'none',
-          secure: true,
+          secure: process.env.NODE_ENV === 'production',
         })
         .send({ message: 'Аутентификация прошла успешно' });
     })
