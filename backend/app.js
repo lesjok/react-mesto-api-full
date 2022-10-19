@@ -48,9 +48,6 @@ app.post('/signup', celebrate({
     password: Joi.string().required(),
   }),
 }), createUser);
-app.get('/signout', (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход' });
-});
 
 app.use(auth);
 app.use('/users', routerUsers);
@@ -58,6 +55,9 @@ app.use('/cards', routerCards);
 
 app.use('*', (req, res, next) => {
   next(new NotFound('Страница не найдена.'));
+});
+app.get('/signout', (req, res) => {
+  res.clearCookie('access_token').send({ message: 'Выход' });
 });
 app.use(errorLogger);
 app.use(errors());

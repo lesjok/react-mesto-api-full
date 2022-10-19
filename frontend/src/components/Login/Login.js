@@ -18,7 +18,7 @@ function Login (props) {
     event.preventDefault();
     props.onLogin({
       email,
-      password
+      password: password
     })
     setEmail('');
     setPassword('');

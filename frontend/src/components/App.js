@@ -53,26 +53,29 @@ function App() {
         handlePopupSuccess(false);
       });
   }
-  useEffect(() => {
-    if (loggedIn) {
-      registerApi.getContent()
+  function checkToken() {
+    registerApi
+      .getContent('')
       .then((data) => {
         if (data) {
-          setCurrentUser(data);
           const userData = {
             'email': data.email,
-          }
-          console.log(userData);
+          };
           setUserData(userData);
           setLoggedIn(true);
-          history.push('/');      
+          history.push("/");
         }
       })
       .catch((err) => {
-        console.log(err.name);
-      })
-    }
-  }, [loggedIn]);
+        handlePopupSuccess(false);
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    checkToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleRegister(data) {
     registerApi.register(data)
@@ -85,10 +88,6 @@ function App() {
       handlePopupSuccess(false);
       console.log(err.name);
     })
-  }
-
-  function onSignOut() {
-    setLoggedIn(false);
   }
 
   useEffect(() => {
@@ -211,6 +210,11 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       });
+  }
+
+  function onSignOut() {      
+    history.push('/signout');
+    setLoggedIn(false);
   }
 
   //закрытие всех попапов по esc
