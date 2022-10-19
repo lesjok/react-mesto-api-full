@@ -78,7 +78,7 @@ class Api {
   }
 }
 const api = new Api({
-  baseUrl: 'http://localhost:3001',
+  baseUrl: 'https://api.react-mesto.nomoredomains.icu',
   headers: {
       'Content-Type': 'application/json',
   },
