@@ -67,7 +67,6 @@ function App() {
         }
       })
       .catch((err) => {
-        handlePopupSuccess(false);
         console.log(err);
       });
   }
@@ -212,9 +211,11 @@ function App() {
       });
   }
 
-  function onSignOut() {      
-    history.push('/signout');
-    setLoggedIn(false);
+  function onSignOut() {  
+    registerApi
+      .signOut()
+      history.push('/sign-in');
+      setLoggedIn(false);
   }
 
   //закрытие всех попапов по esc

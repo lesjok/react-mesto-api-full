@@ -30,6 +30,15 @@ class RegisterApi {
     .then(this._checkResponseStatus)
   }
 
+  signOut() {
+    return fetch(`${this._options.baseUrl}/signout`, {
+      method: 'GET',
+      headers: this._options.headers,
+      credentials: 'include',
+    })
+    .then(this._checkResponseStatus)
+  }
+
   getContent() {
     return fetch(`${this._options.baseUrl}/users/me`, {
       headers: this._options.headers,
