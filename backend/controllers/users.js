@@ -32,7 +32,8 @@ const createUser = (req, res, next) => {
           next(err);
         }
       });
-  });
+  })
+    .catch(next);
 };
 // eslint-disable-next-line consistent-return
 const login = (req, res, next) => {

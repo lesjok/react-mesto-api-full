@@ -52,13 +52,13 @@ app.post('/signup', celebrate({
 app.use(auth);
 app.use('/users', routerUsers);
 app.use('/cards', routerCards);
-
-app.use('*', (req, res, next) => {
-  next(new NotFound('Страница не найдена.'));
-});
 app.get('/signout', (req, res) => {
   res.clearCookie('access_token').send({ message: 'Выход' });
 });
+app.use('*', (req, res, next) => {
+  next(new NotFound('Страница не найдена.'));
+});
+
 app.use(errorLogger);
 app.use(errors());
 app.use(errorMessage);
