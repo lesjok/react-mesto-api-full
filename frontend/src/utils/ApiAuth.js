@@ -50,7 +50,7 @@ class RegisterApi {
 }
 
 const registerApi = new RegisterApi({
-  baseUrl: 'https://api.react-mesto.nomoredomains.icu',
+  baseUrl: 'http://api.1137637-cj55507.tw1.ru',
   headers: {
     'Content-Type': 'application/json',
   },

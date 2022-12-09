@@ -58,6 +58,7 @@ function App() {
       .getContent('')
       .then((data) => {
         if (data) {
+          console.log(data);
           const userData = {
             'email': data.email,
           };
