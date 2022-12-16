@@ -21,7 +21,7 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
-
+mongoose.set('strictQuery', true);
 app.use(requestLogger);
 app.use(express.json());
 app.use(cookieParser());
