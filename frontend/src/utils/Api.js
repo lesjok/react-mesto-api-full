@@ -78,7 +78,8 @@ class Api {
   }
 }
 const api = new Api({
-  baseUrl: 'http://api.1137637-cj55507.tw1.ru',
+  // baseUrl: 'http://localhost:3000',
+  baseUrl: 'http://api.1149487-cj55507.tw1.ru',
   headers: {
       'Content-Type': 'application/json',
   },

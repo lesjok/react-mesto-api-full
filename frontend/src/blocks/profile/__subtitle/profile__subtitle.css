@@ -6,6 +6,8 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 336px;
+  display: flex;
+  align-items: center;
 }
 @media screen and (max-width: 540px) {
   .profile__subtitle {

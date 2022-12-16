@@ -1,3 +1,8 @@
 .header__mail {
   margin: 0;
 }
+@media screen and (max-width: 440px) {
+  .header__mail {
+    display: none;
+  }
+}

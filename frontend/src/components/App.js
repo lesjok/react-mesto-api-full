@@ -43,33 +43,34 @@ function App() {
 
   function handleLogin(data) {
     registerApi
-      .authorize(data)
-      .then((res) => {
-        setLoggedIn(true);
-        history.push("/");
-      })
-      .catch((err) => {  
-        console.log(err);
-        handlePopupSuccess(false);
-      });
+    .authorize(data)
+    .then((res) => {
+      setLoggedIn(true);
+      history.push("/");
+    })
+    .catch((err) => {  
+      console.log(err);
+      handlePopupSuccess(false);
+    });
   }
+
   function checkToken() {
     registerApi
-      .getContent('')
-      .then((data) => {
-        if (data) {
-          console.log(data);
-          const userData = {
-            'email': data.email,
-          };
-          setUserData(userData);
-          setLoggedIn(true);
-          history.push("/");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .getContent('')
+    .then((data) => {
+      if (data) {
+        console.log(data);
+        const userData = {
+          'email': data.email,
+        };
+        setUserData(userData);
+        setLoggedIn(true);
+        history.push("/");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   useEffect(() => {
@@ -93,51 +94,52 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       api
-        .getInitialCards()
-        .then((res) => {
-          setCards(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .getInitialCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
   }, [loggedIn]);
+
   useEffect(() => {
     if (loggedIn) {
       api
-        .getUser()
-        .then((res) => {
-          setCurrentUser(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .getUser()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
   }, [loggedIn]);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i === currentUser._id);
     api
-      .changeLikeCardStatus(card._id, isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .changeLikeCardStatus(card._id, isLiked)
+    .then((newCard) => {
+      setCards((state) =>
+        state.map((c) => (c._id === card._id ? newCard : c))
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   function handleCardDelete(card) {
     api
-      .deleteCard(card._id)
-      .then(() => {
-        setCards((state) => state.filter((item) => item._id !== card._id));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .deleteCard(card._id)
+    .then(() => {
+      setCards((state) => state.filter((item) => item._id !== card._id));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   const closeAllPopups = () => {
@@ -167,56 +169,56 @@ function App() {
   function handleUpdateAvatar(data) {
     setIsLoading(true);
     api
-      .changeUserAvatar(data)
-      .then((res) => {
-        setCurrentUser(res);
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    .changeUserAvatar(data)
+    .then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
   }
 
   function handleAddPlaceSubmit(data) {
     setIsLoading(true);
     api
-      .addCard(data)
-      .then((res) => {
-        setCards([res, ...cards]);
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    .addCard(data)
+    .then((res) => {
+      setCards([res, ...cards]);
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
   }
 
   function handleUpdateUser(data) {
     setIsLoading(true);
     api
-      .editUserInfo(data)
-      .then((res) => {
-        setCurrentUser(res);
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    .editUserInfo(data)
+    .then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
   }
 
   function onSignOut() {  
     registerApi
-      .signOut()
-      history.push('/sign-in');
-      setLoggedIn(false);
+    .signOut()
+    history.push('/sign-in');
+    setLoggedIn(false);
   }
 
   //закрытие всех попапов по esc
